@@ -8,7 +8,8 @@
   <a href="#features">Features</a> •
   <a href="#json-mode">JSON Mode</a> •
   <a href="#attack-detection">Attack Detection</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#contributing">Contributing</a> •
+  <a href="https://discord.gg/SsTWMYuyGG">Discord</a>
 </p>
 
 <p align="center">
@@ -16,6 +17,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue?style=flat-square" alt="License"></a>
   <a href="https://github.com/Flowtriq/nethawk/actions"><img src="https://img.shields.io/github/actions/workflow/status/Flowtriq/nethawk/build.yml?style=flat-square" alt="Build"></a>
   <a href="https://goreportcard.com/report/github.com/Flowtriq/nethawk"><img src="https://goreportcard.com/badge/github.com/Flowtriq/nethawk?style=flat-square" alt="Go Report"></a>
+  <a href="https://discord.gg/SsTWMYuyGG"><img src="https://img.shields.io/discord/1234567890?style=flat-square&label=discord&color=5865F2" alt="Discord"></a>
 </p>
 
 ---
