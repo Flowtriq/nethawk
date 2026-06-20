@@ -17,11 +17,6 @@ jobs:
             goos: linux
             goarch: amd64
             binary: nethawk-linux-amd64
-          - os: ubuntu-latest
-            goos: linux
-            goarch: arm64
-            binary: nethawk-linux-arm64
-            cross: true
           - os: macos-latest
             goos: darwin
             goarch: amd64
@@ -45,19 +40,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libpcap-dev
-          if [ "${{ matrix.cross }}" = "true" ]; then
-            sudo apt-get install -y gcc-aarch64-linux-gnu
-            sudo dpkg --add-architecture arm64
-            sudo apt-get update
-            sudo apt-get install -y libpcap-dev:arm64 || true
-          fi
 
       - name: Build
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
-          CGO_ENABLED: ${{ matrix.cross && '1' || '1' }}
-          CC: ${{ matrix.cross && 'aarch64-linux-gnu-gcc' || '' }}
+          CGO_ENABLED: '1'
         run: |
           go build -ldflags "-s -w -X main.version=${{ github.ref_name }}" \
             -o ${{ matrix.binary }} ./cmd/nethawk
