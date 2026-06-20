@@ -14,7 +14,7 @@ import (
 type tickMsg capture.Snapshot
 
 type model struct {
-	cap      *capture.Capture
+	src      capture.Source
 	snap     capture.Snapshot
 	width    int
 	height   int
@@ -25,9 +25,9 @@ type App struct {
 	program *tea.Program
 }
 
-func New(cap *capture.Capture) *App {
+func New(src capture.Source) *App {
 	m := &model{
-		cap:   cap,
+		src:   src,
 		width: 80,
 	}
 	p := tea.NewProgram(m, tea.WithAltScreen())
@@ -44,12 +44,12 @@ func (a *App) Quit() {
 }
 
 func (m *model) Init() tea.Cmd {
-	return waitForTick(m.cap)
+	return waitForTick(m.src)
 }
 
-func waitForTick(cap *capture.Capture) tea.Cmd {
+func waitForTick(src capture.Source) tea.Cmd {
 	return func() tea.Msg {
-		snap := <-cap.Ticker()
+		snap := <-src.Ticker()
 		return tickMsg(snap)
 	}
 }
@@ -60,7 +60,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		switch msg.String() {
 		case "q", "ctrl+c":
 			m.quitting = true
-			m.cap.Stop()
+			m.src.Stop()
 			return m, tea.Quit
 		}
 	case tea.WindowSizeMsg:
@@ -68,7 +68,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 	case tickMsg:
 		m.snap = capture.Snapshot(msg)
-		return m, waitForTick(m.cap)
+		return m, waitForTick(m.src)
 	}
 	return m, nil
 }
@@ -108,20 +108,20 @@ func (m *model) View() string {
 
 func (m *model) renderHeader(w int) string {
 	logo := titleStyle.Render("◆ NetHawk")
-	iface := labelStyle.Render("interface ") + valueStyle.Render(m.snap.Interface)
+	iface := dimStyle.Render(" ") + valueStyle.Render(m.snap.Interface)
+	uptime := dimStyle.Render(" "+formatDuration(m.src.Uptime()))
 
-	pps := formatCount(m.snap.PPS) + " pps"
 	bps := formatBits(m.snap.BPS)
-	traffic := valueStyle.Render("▲ "+bps) + dimStyle.Render("  ") + valueStyle.Render(pps)
+	pps := formatCount(m.snap.PPS)
+	traffic := valueStyle.Render("▲ "+bps) +
+		dimStyle.Render(" ") + valueStyle.Render(pps+"pps")
 
-	peak := labelStyle.Render("peak ") + dimStyle.Render(formatBits(m.snap.PeakBPS))
+	left := logo + iface + uptime
+	right := traffic
 
-	uptime := labelStyle.Render("up ") + dimStyle.Render(formatDuration(m.cap.Uptime()))
-
-	left := logo + "  " + iface
-	right := traffic + "  " + peak + "  " + uptime
-
-	gap := w - lipgloss.Width(left) - lipgloss.Width(right) - 2
+	// panel border(2) + padding(2) = 4 chars consumed
+	innerWidth := w - 6
+	gap := innerWidth - lipgloss.Width(left) - lipgloss.Width(right)
 	if gap < 1 {
 		gap = 1
 	}
@@ -333,9 +333,10 @@ func (m *model) renderStatus(w int) string {
 				formatCount(s.PPS), s.UniqueIPs))
 	}
 
-	footer := dimStyle.Render("  q: quit")
+	footer := dimStyle.Render("q: quit")
 
-	gap := w - lipgloss.Width(status) - lipgloss.Width(footer) - 4
+	innerWidth := w - 6
+	gap := innerWidth - lipgloss.Width(status) - lipgloss.Width(footer)
 	if gap < 1 {
 		gap = 1
 	}

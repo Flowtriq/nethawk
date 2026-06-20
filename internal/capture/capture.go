@@ -150,6 +150,12 @@ func (c *Capture) processPacket(pkt gopacket.Packet) {
 		}
 	}
 
+	// Check ICMP first (it has no transport layer)
+	if pkt.Layer(layers.LayerTypeICMPv4) != nil || pkt.Layer(layers.LayerTypeICMPv6) != nil {
+		c.icmpCount++
+		return
+	}
+
 	transportLayer := pkt.TransportLayer()
 	if transportLayer == nil {
 		c.otherCount++
@@ -167,14 +173,6 @@ func (c *Capture) processPacket(pkt gopacket.Packet) {
 		c.dstPorts[key]++
 	default:
 		c.otherCount++
-	}
-
-	if icmpLayer := pkt.Layer(layers.LayerTypeICMPv4); icmpLayer != nil {
-		c.icmpCount++
-		c.otherCount-- // was counted as other above
-	} else if icmpLayer := pkt.Layer(layers.LayerTypeICMPv6); icmpLayer != nil {
-		c.icmpCount++
-		c.otherCount--
 	}
 }
 
