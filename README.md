@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Flowtriq/nethawk/main/.github/banner.png" alt="NetHawk" width="600">
-</p>
+<h1 align="center">◆ NetHawk</h1>
 
 <h3 align="center">Real-time network traffic analysis in your terminal.</h3>
 
@@ -30,28 +28,7 @@
 
 SSH into a server. Run `nethawk`. See everything hitting your network in real time.
 
-No config files. No databases. No web servers. One 7MB binary.
-
-## What You See
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ ◆ NetHawk  interface eth0       ▲ 1.24 Gbps  234K pps  peak 2.4 Gbps     │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ Traffic (last 60s)                                                         │
-│ ▂▃▄▅▆▇█▇▆▅▅▄▃▂▂▃▄▅▆▇█▇▆▅▄▃▂▂▃▄▅▆▇█▇▆▅▄▃▂▃▄▅▆▇▇▆▅▄▃▂▂▃▄▅▆▇█▁▁▁▁▁▁▁▁▁ │
-├──────────────────────┬──────────────────────┬───────────────────────────────┤
-│ Protocols            │ Top Sources          │ Top Ports                     │
-│                      │                      │                               │
-│  TCP  45.2% █████░░  │  1 192.168.1.100     │  53/UDP       42.1%           │
-│  UDP  42.1% ████░░░  │  2 192.168.1.101     │  443/TCP      28.3%           │
-│  ICMP 12.7% ██░░░░░  │  3 10.0.0.1          │  80/TCP       14.2%           │
-│                      │  4 172.16.0.5         │  22/TCP        8.1%           │
-│  unique IPs 847      │  5 203.0.113.45       │  123/UDP       7.3%           │
-├──────────────────────┴──────────────────────┴───────────────────────────────┤
-│ ✓ NORMAL — No threats detected                                      q: quit│
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+No config files. No databases. No web servers. One 5MB binary.
 
 ## Install
 
