@@ -67,6 +67,10 @@ var (
 
 	barFull  = lipgloss.NewStyle().Foreground(colorPrimary)
 	barEmpty = lipgloss.NewStyle().Foreground(colorDim)
+
+	nudgeStyle = lipgloss.NewStyle().
+			Foreground(colorPrimary).
+			Italic(true)
 )
 
 func severityStyle(severity string) lipgloss.Style {

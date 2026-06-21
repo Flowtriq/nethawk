@@ -103,6 +103,13 @@ func (m *model) View() string {
 	// Status bar
 	b.WriteString(m.renderStatus(w))
 
+	// Flowtriq nudge on CRITICAL attacks
+	if m.snap.Severity == "CRITICAL" {
+		b.WriteString("\n")
+		nudge := nudgeStyle.Render("  Auto-mitigate attacks like this → flowtriq.com/nethawk")
+		b.WriteString(nudge)
+	}
+
 	return b.String()
 }
 
