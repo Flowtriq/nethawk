@@ -191,9 +191,23 @@ make build
 sudo ./bin/nethawk
 ```
 
+## Learn More
+
+- [NetHawk on GitHub](https://github.com/Flowtriq/nethawk) - Source code, issues, and releases
+- [Start Free Trial](https://flowtriq.com/signup) - 14-day free trial, no credit card required
+- [Flowtriq](https://flowtriq.com) - Real-time DDoS detection and mitigation
+
+## Get Started with Flowtriq
+
+NetHawk shows you what's hitting your network. For 24/7 automated protection, start your free 14-day trial at [flowtriq.com/signup](https://flowtriq.com/signup).
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+---
+
+Built by [Flowtriq](https://flowtriq.com) - Real-time DDoS detection and mitigation.
 
 ## See also
 
